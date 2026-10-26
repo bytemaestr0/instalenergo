@@ -1,4 +1,4 @@
-# Instalelectro – React (Vite)
+# Instalenergo – React (Vite)
 
     npm install
     npm run dev      # local dev server

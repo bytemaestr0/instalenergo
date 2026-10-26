@@ -10,7 +10,7 @@ export const T = {
     heroCta2: "Vezi serviciile",
     stats: [[15, "+", "ani de experiență"], [400, "+", "proiecte finalizate"], [24, "h", "răspuns la solicitări"]],
     aboutT: "Inginerie electrică fără improvizații",
-    aboutP: "Instalelectro proiectează și montează sisteme de securitate, energie solară și instalații electrice complexe. Fiecare proiect pornește de la o vizită la fața locului și se termină cu teste, acte și instruire pentru client.",
+    aboutP: "Instalenergo proiectează și montează sisteme de securitate, energie solară și instalații electrice complexe. Fiecare proiect pornește de la o vizită la fața locului și se termină cu teste, acte și instruire pentru client.",
     aboutPoints: ["Echipe autorizate și asigurate", "Echipamente certificate, cu garanție", "Ofertă clară, fără costuri ascunse"],
     servT: "Ce putem face pentru tine",
     serv: [
@@ -47,7 +47,7 @@ export const T = {
     heroCta2: "See services",
     stats: [[15, "+", "years of experience"], [400, "+", "projects delivered"], [24, "h", "response time"]],
     aboutT: "Electrical engineering without improvising",
-    aboutP: "Instalelectro designs and installs security systems, solar energy and complex electrical installations. Every project starts with a site visit and ends with testing, paperwork and client training.",
+    aboutP: "Instalenergo designs and installs security systems, solar energy and complex electrical installations. Every project starts with a site visit and ends with testing, paperwork and client training.",
     aboutPoints: ["Licensed, insured crews", "Certified equipment with warranty", "Clear quotes, no hidden costs"],
     servT: "What we can do for you",
     serv: [
@@ -84,7 +84,7 @@ export const T = {
     heroCta2: "Наши услуги",
     stats: [[15, "+", "лет опыта"], [400, "+", "завершённых проектов"], [24, "ч", "время ответа"]],
     aboutT: "Электротехника без импровизаций",
-    aboutP: "Instalelectro проектирует и монтирует системы безопасности, солнечную энергетику и сложные электроустановки. Каждый проект начинается с выезда на объект и заканчивается испытаниями, документами и обучением клиента.",
+    aboutP: "Instalenergo проектирует и монтирует системы безопасности, солнечную энергетику и сложные электроустановки. Каждый проект начинается с выезда на объект и заканчивается испытаниями, документами и обучением клиента.",
     aboutPoints: ["Лицензированные застрахованные бригады", "Сертифицированное оборудование с гарантией", "Понятная смета без скрытых платежей"],
     servT: "Чем мы можем вам помочь",
     serv: [

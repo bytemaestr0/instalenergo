@@ -181,6 +181,20 @@ function Spot({ children, className = "" }) {
   return <article className={`card ${className}`} onPointerMove={onMove}>{children}</article>;
 }
 
+function LogoMark() {
+  return (
+    <svg className="lm" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ffd45e" /><stop offset="1" stopColor="#ff9f1c" /></linearGradient>
+      </defs>
+      <circle className="lm-orbit" cx="24" cy="24" r="22" />
+      <circle className="lm-arc" cx="24" cy="24" r="22" />
+      <path className="lm-hex" d="M24 4 41.3 14v20L24 44 6.7 34V14z" fill="url(#lg)" stroke="url(#lg)" strokeWidth="4" strokeLinejoin="round" />
+      <path className="lm-bolt" d="M27 11 14 26.5h9L21 38l13-16h-9z" fill="#08122e" />
+    </svg>
+  );
+}
+
 function Nav({ t, lang, setLang, active }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -212,8 +226,8 @@ function Nav({ t, lang, setLang, active }) {
     <>
       <header className={`nav ${scrolled ? "sc" : ""}`}>
         <div className="nav-in">
-          <a href="#top" className="logo" onClick={() => setOpen(false)}>
-            <span className="logo-mark"><Icon n="bolt" /></span>Instal<b>electro</b>
+          <a href="#top" className="logo" onClick={() => setOpen(false)} aria-label="Instalenergo">
+            <LogoMark /><span className="wm">Instal<b>energo</b></span>
           </a>
           <nav className="links" aria-label="Principal">
             {t.nav.map(([id, label]) => (
@@ -277,7 +291,7 @@ export default function App() {
     const [n, m, b] = [f.get("name"), f.get("email"), f.get("message")].map((x) => String(x || "").trim());
     if (!n || !m || !b) return setStatus(t.err);
     setStatus(t.sent);
-    location.href = `mailto:${MAIL}?subject=${encodeURIComponent("Instalelectro – " + n)}&body=${encodeURIComponent(b + "\n\n" + n + " <" + m + ">")}`;
+    location.href = `mailto:${MAIL}?subject=${encodeURIComponent("Instalenergo – " + n)}&body=${encodeURIComponent(b + "\n\n" + n + " <" + m + ">")}`;
   };
 
   return (
@@ -385,7 +399,7 @@ export default function App() {
       </main>
       <footer className="foot">
         <div className="wrap">
-          <span>© {new Date().getFullYear()} Instalelectro. <Tx>{t.rights}</Tx></span>
+          <span>© {new Date().getFullYear()} Instalenergo. <Tx>{t.rights}</Tx></span>
           <a href={TEL}>{PHONE}</a>
         </div>
       </footer>

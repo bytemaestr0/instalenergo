@@ -242,3 +242,16 @@ input:focus,textarea:focus{outline:0;border-color:var(--amber);background:rgba(2
 .card:hover .photo{transform:scale(1.12)}
 .card:has(.photo){color:#fff}
 .card:has(.photo) .chip{background:rgba(255,255,255,.18)}
+
+/* logo */
+.logo{gap:.6rem}
+.lm{width:42px;height:42px;overflow:visible;flex:none}
+.wm{font-family:var(--head);font-weight:600;font-size:1.2rem;letter-spacing:-.02em;line-height:1}
+.wm b{font-weight:800;color:var(--amber);margin-left:0}
+.lm-orbit{fill:none;stroke:rgba(255,255,255,.14);stroke-width:1.2}
+.lm-arc{fill:none;stroke:var(--amber);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:30 108;transform-origin:24px 24px;animation:spin 5s linear infinite}
+.lm-hex,.lm-bolt{transform-origin:24px 24px;transition:transform .6s var(--ease)}
+.logo:hover .lm-hex{transform:rotate(60deg) scale(1.05)}
+.logo:hover .lm-bolt{transform:scale(1.15);animation:flash .5s steps(2) 2}
+.lm-hex{filter:drop-shadow(0 0 8px rgba(255,183,3,.45))}
+@keyframes flash{50%{fill:#fff}}
