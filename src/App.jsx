@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { T } from "./i18n.js";
 
-const PHONE = "+373 79 097 638";
-const TEL = "tel:+37379097638";
-const MAIL = "contact@meralselectric.com";
+const PHONE = "+373 69 588 574";
+const TEL = "tel:+37369588574";
+const MAIL = "instal.energo.orhei@gmail.com";
 
 const Icon = ({ n }) => {
   const p = {
@@ -373,7 +373,7 @@ export default function App() {
             <div>
               <Reveal><h2><Tx>{t.contT}</Tx></h2><p className="lead"><Tx>{t.contP}</Tx></p></Reveal>
               <ul className="info">
-                {[["pin", t.loc, "Pelivan, Moldova", null], ["phone", t.tel, PHONE, TEL], ["mail", t.mail, MAIL, `mailto:${MAIL}`]].map(([ic, k, v, href], i) => (
+                {[["pin", t.loc, "Orhei, Moldova", null], ["phone", t.tel, PHONE, TEL], ["mail", t.mail, MAIL, `mailto:${MAIL}`]].map(([ic, k, v, href], i) => (
                   <Reveal as="li" key={k} delay={i * 100}>
                     <span className="chip sm"><Icon n={ic} /></span>
                     <div><small><Tx>{k}</Tx></small>{href ? <a href={href}>{v}</a> : <span>{v}</span>}</div>
@@ -381,8 +381,8 @@ export default function App() {
                 ))}
               </ul>
               <Reveal delay={200} className="map">
-                <iframe title="Map" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Pelivan,Moldova&z=13&output=embed" />
-                <a href="https://maps.google.com/?q=Pelivan,Moldova" target="_blank" rel="noreferrer"><Tx>{t.open}</Tx></a>
+                <iframe title="Map" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=47.3774668,28.8228008&z=16&output=embed" />
+                <a href="https://maps.app.goo.gl/Tv1CQVY4kGRxrGs36" target="_blank" rel="noreferrer"><Tx>{t.open}</Tx></a>
               </Reveal>
             </div>
             <Reveal delay={150}>
