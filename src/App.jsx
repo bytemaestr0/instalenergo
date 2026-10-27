@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { T } from "./i18n.js";
+import { WEB3FORMS_KEY } from "./config.js";
 
 const PHONE = "+373 69 588 574";
 const TEL = "tel:+37369588574";
-const KEY = import.meta.env.VITE_WEB3FORMS_KEY;
+const KEY = import.meta.env.VITE_WEB3FORMS_KEY || WEB3FORMS_KEY;
 const MAIL = "instal.energo.orhei@gmail.com";
 
 const Icon = ({ n }) => {
