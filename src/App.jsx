@@ -3,6 +3,7 @@ import { T } from "./i18n.js";
 
 const PHONE = "+373 69 588 574";
 const TEL = "tel:+37369588574";
+const KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 const MAIL = "instal.energo.orhei@gmail.com";
 
 const Icon = ({ n }) => {
@@ -264,10 +265,63 @@ function Nav({ t, lang, setLang, active }) {
   );
 }
 
+function Switch({ on, onChange, locked, label }) {
+  return (
+    <button type="button" role="switch" aria-checked={on} aria-label={label} disabled={locked} className={`sw ${on ? "on" : ""}`} onClick={() => onChange(!on)}><i /></button>
+  );
+}
+
+function CookieBanner({ t, open, consent, onSave }) {
+  const c = t.ck;
+  const [more, setMore] = useState(false);
+  const [ext, setExt] = useState(!!consent?.ext);
+  useEffect(() => { if (open) setExt(!!consent?.ext); }, [open]);
+  return (
+    <aside className={`ck ${open ? "open" : ""} ${more ? "more" : ""}`} role="dialog" aria-modal="false" aria-labelledby="ck-t" aria-hidden={!open}>
+      <div className="ck-head">
+        <span className="ck-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 3a9 9 0 1 0 9 9 4 4 0 0 1-4-4 4 4 0 0 1-5-5z" />
+            <circle cx="8.5" cy="11" r=".8" fill="currentColor" /><circle cx="12.5" cy="15.5" r=".8" fill="currentColor" /><circle cx="15.5" cy="12" r=".8" fill="currentColor" /><circle cx="8" cy="15" r=".8" fill="currentColor" />
+          </svg>
+        </span>
+        <div>
+          <p className="ck-h" id="ck-t"><Tx>{c.title}</Tx></p>
+          <p className="ck-p"><Tx>{c.text}</Tx></p>
+        </div>
+      </div>
+      <div className="ck-more"><div>
+        <div className="ck-row"><div><b><Tx>{c.nec}</Tx></b><small><Tx>{c.necD}</Tx></small></div><Switch on locked label={c.nec} onChange={() => {}} /></div>
+        <div className="ck-row"><div><b><Tx>{c.ext}</Tx></b><small><Tx>{c.extD}</Tx></small></div><Switch on={ext} label={c.ext} onChange={setExt} /></div>
+        <button type="button" className="btn sm wide" onClick={() => onSave({ ext })} tabIndex={open && more ? 0 : -1}><Tx>{c.save}</Tx></button>
+      </div></div>
+      <div className="ck-btns">
+        <button type="button" className="btn sm" onClick={() => onSave({ ext: true })} tabIndex={open ? 0 : -1}><Tx>{c.all}</Tx></button>
+        <button type="button" className="btn sm ghost" onClick={() => onSave({ ext: false })} tabIndex={open ? 0 : -1}><Tx>{c.rej}</Tx></button>
+        <button type="button" className="linkbtn" onClick={() => setMore(!more)} aria-expanded={more} tabIndex={open ? 0 : -1}><Tx>{more ? c.less : c.more}</Tx></button>
+      </div>
+    </aside>
+  );
+}
+
 export default function App() {
   const [lang, setLang] = useState(() => { try { const l = localStorage.getItem("lang"); return T[l] ? l : "ro"; } catch { return "ro"; } });
   const [active, setActive] = useState("");
   const [status, setStatus] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [consent, setConsent] = useState(() => { try { return JSON.parse(localStorage.getItem("consent-v1")); } catch { return null; } });
+  const [ckOpen, setCkOpen] = useState(false);
+  const [mapOnce, setMapOnce] = useState(false);
+  useEffect(() => {
+    if (consent) return;
+    const id = setTimeout(() => setCkOpen(true), 1200);
+    return () => clearTimeout(id);
+  }, []);
+  const saveConsent = (c) => {
+    setConsent(c);
+    try { localStorage.setItem("consent-v1", JSON.stringify(c)); } catch {}
+    setCkOpen(false);
+  };
   const t = T[lang];
 
   useEffect(() => {
@@ -285,13 +339,30 @@ export default function App() {
     return () => io.disconnect();
   }, []);
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const f = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const f = new FormData(form);
+    if (f.get("botcheck")) return;
     const [n, m, b] = [f.get("name"), f.get("email"), f.get("message")].map((x) => String(x || "").trim());
-    if (!n || !m || !b) return setStatus(t.err);
-    setStatus(t.sent);
-    location.href = `mailto:${MAIL}?subject=${encodeURIComponent("Instalenergo – " + n)}&body=${encodeURIComponent(b + "\n\n" + n + " <" + m + ">")}`;
+    if (!n || !m || !b) return setStatus("err");
+    if (!KEY) {
+      setStatus("sent");
+      location.href = `mailto:${MAIL}?subject=${encodeURIComponent("Instalenergo – " + n)}&body=${encodeURIComponent(b + "\n\n" + n + " <" + m + ">")}`;
+      return;
+    }
+    setBusy(true);
+    setStatus("sending");
+    try {
+      const r = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ access_key: KEY, subject: `Instalenergo – cerere de ofertă de la ${n}`, from_name: "Instalenergo site", name: n, email: m, message: b, botcheck: "" }),
+      });
+      const d = await r.json();
+      if (d.success) { setStatus("ok"); form.reset(); } else setStatus("fail");
+    } catch { setStatus("fail"); }
+    setBusy(false);
   };
 
   return (
@@ -381,17 +452,27 @@ export default function App() {
                 ))}
               </ul>
               <Reveal delay={200} className="map">
-                <iframe title="Map" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=47.3774668,28.8228008&z=16&output=embed" />
+                {consent?.ext || mapOnce ? (
+                  <iframe title="Map" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=47.3774668,28.8228008&z=16&output=embed" />
+                ) : (
+                  <div className="mapph">
+                    <Icon n="pin" />
+                    <p><Tx>{t.ck.mapT}</Tx></p>
+                    <button type="button" className="btn sm" onClick={() => setMapOnce(true)}><Tx>{t.ck.mapB}</Tx></button>
+                  </div>
+                )}
                 <a href="https://maps.app.goo.gl/Tv1CQVY4kGRxrGs36" target="_blank" rel="noreferrer"><Tx>{t.open}</Tx></a>
               </Reveal>
             </div>
             <Reveal delay={150}>
               <form className="form" onSubmit={submit} noValidate>
+                <input name="botcheck" className="hp" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                 <label><span><Tx>{t.name}</Tx></span><input name="name" autoComplete="name" placeholder={t.namePh} /></label>
                 <label><span><Tx>{t.email}</Tx></span><input name="email" type="email" autoComplete="email" placeholder="ion@example.com" /></label>
                 <label><span><Tx>{t.msg}</Tx></span><textarea name="message" rows="5" placeholder={t.msgPh} /></label>
-                <button className="btn wide" type="submit"><Tx>{t.send}</Tx><Icon n="arrow" /></button>
-                <p className="status" role="status"><Tx>{status}</Tx></p>
+                <button className="btn wide" type="submit" disabled={busy}><Tx>{t.send}</Tx><Icon n="arrow" /></button>
+                <p className="status" role="status"><Tx>{status ? t[status] : ""}</Tx></p>
+                <p className="note"><Tx>{t.note}</Tx></p>
               </form>
             </Reveal>
           </div>
@@ -400,9 +481,11 @@ export default function App() {
       <footer className="foot">
         <div className="wrap">
           <span>© {new Date().getFullYear()} Instalenergo. <Tx>{t.rights}</Tx></span>
+          <button type="button" className="linkbtn" onClick={() => setCkOpen(true)}><Tx>{t.ck.settings}</Tx></button>
           <a href={TEL}>{PHONE}</a>
         </div>
       </footer>
+      <CookieBanner t={t} open={ckOpen} consent={consent} onSave={saveConsent} />
     </>
   );
 }

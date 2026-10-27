@@ -35,6 +35,9 @@ export const T = {
     open: "Deschide în Maps",
     rights: "Toate drepturile rezervate.",
     menu: "Meniu", close: "Închide",
+    sending: "Se trimite…", ok: "Mulțumim! Mesajul a fost trimis, revenim în curând.", fail: "Nu s-a putut trimite. Încearcă din nou sau sună-ne.",
+    note: "Datele tale sunt folosite doar pentru a-ți răspunde la solicitare.",
+    ck: { title: "Folosim cookie-uri", text: "Păstrăm doar ce e necesar pentru ca site-ul să funcționeze. Harta Google folosește cookie-uri externe și se încarcă doar cu acordul tău.", all: "Acceptă tot", rej: "Doar necesare", more: "Personalizează", less: "Ascunde detaliile", nec: "Necesare", necD: "Limba și alegerea ta privind cookie-urile. Mereu active.", ext: "Hartă Google", extD: "Încarcă harta interactivă. Google poate seta cookie-uri.", save: "Salvează alegerea", settings: "Setări cookie", mapT: "Harta este blocată pentru a-ți respecta alegerea privind cookie-urile.", mapB: "Încarcă harta" },
   },
   en: {
     nav: [["despre", "About"], ["servicii", "Services"], ["proces", "How we work"], ["contact", "Contact"]],
@@ -72,6 +75,9 @@ export const T = {
     open: "Open in Maps",
     rights: "All rights reserved.",
     menu: "Menu", close: "Close",
+    sending: "Sending…", ok: "Thank you! Your message was sent, we'll get back to you soon.", fail: "Couldn't send it. Please try again or call us.",
+    note: "Your details are only used to reply to your request.",
+    ck: { title: "We use cookies", text: "We only keep what the site needs to work. The Google map uses third-party cookies and loads only with your consent.", all: "Accept all", rej: "Necessary only", more: "Customize", less: "Hide details", nec: "Necessary", necD: "Your language and your cookie choice. Always on.", ext: "Google Map", extD: "Loads the interactive map. Google may set cookies.", save: "Save choice", settings: "Cookie settings", mapT: "The map is blocked to respect your cookie choice.", mapB: "Load map" },
   },
   ru: {
     nav: [["despre", "О нас"], ["servicii", "Услуги"], ["proces", "Как мы работаем"], ["contact", "Контакты"]],
@@ -109,5 +115,8 @@ export const T = {
     open: "Открыть в Картах",
     rights: "Все права защищены.",
     menu: "Меню", close: "Закрыть",
+    sending: "Отправляем…", ok: "Спасибо! Сообщение отправлено, скоро свяжемся.", fail: "Не удалось отправить. Попробуйте ещё раз или позвоните нам.",
+    note: "Ваши данные используются только для ответа на обращение.",
+    ck: { title: "Мы используем cookie", text: "Мы сохраняем только необходимое для работы сайта. Карта Google использует сторонние cookie и загружается только с вашего согласия.", all: "Принять все", rej: "Только необходимые", more: "Настроить", less: "Скрыть детали", nec: "Необходимые", necD: "Язык и ваш выбор по cookie. Всегда включены.", ext: "Карта Google", extD: "Загружает интерактивную карту. Google может устанавливать cookie.", save: "Сохранить выбор", settings: "Настройки cookie", mapT: "Карта заблокирована, чтобы учесть ваш выбор по cookie.", mapB: "Загрузить карту" },
   },
 };
